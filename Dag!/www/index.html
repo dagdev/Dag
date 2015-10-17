@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- ngCordova -->
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDZFwDD9Jco1fsXJl3EFXxXfc9PcHs2yAM&sensor=true"></script>
+
+  </head>
+  <body ng-app="starter">
+
+    <ion-pane>
+      <ion-header-bar class="bar-assertive">
+        <h1 class="title">Dag!</h1>
+      </ion-header-bar>
+      <ion-nav-view></ion-nav-view>
+    </ion-pane>
+
+    <!-- MUDEI AQUI -->
+    <script id="chat.html" type="text/ng-template">
+      <ion-view title="Chat">
+        <ion-content class="padding">
+            <p>Nenhuma conversa foi iniciada!</p>
+          </p>
+        </ion-content>
+      </ion-view>
+    </script>
+
+    <ion-tabs class="tabs-color-assertive">
+
+      <ion-tab title="Localizar" icon="ion-ios-color-filter-outline" href="#/tab/home">
+        <ion-nav-view name="home-tab"></ion-nav-view>
+      </ion-tab>
+
+      <ion-tab title="Conversa" icon="ion-chatboxes" href="#/tab/chat">
+        <ion-nav-view name="chat-tab"></ion-nav-view>
+      </ion-tab>
+
+    </ion-tabs>
+
+  </body>
+</html>
