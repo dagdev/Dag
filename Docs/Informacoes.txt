@@ -14,6 +14,8 @@ Senha: dx1Ax2gx3
 
 MySQL
 
+http://sql11.000webhost.com/phpMyAdmin/index.php?db=a5004318_dag&lang=en-utf-8&token=b00198e1285e524d12d78b8fa18f7727
+
 $mysql_host = "mysql11.000webhost.com";
 $mysql_database = "a5004318_dag";
 $mysql_user = "a5004318_dag";
