@@ -1,0 +1,104 @@
+DAG: 
+
+http://dag.hostzi.com/
+
+Email: dev@dag.hostzi.com
+
+Senha: dx1Ax2gx3
+
+
+ Para acessar os e-mails desta conta:
+
+ http://webmail.000webhost.com/roundcube/
+
+
+MySQL
+
+$mysql_host = "mysql11.000webhost.com";
+$mysql_database = "a5004318_dag";
+$mysql_user = "a5004318_dag";
+$mysql_password = "mx1Yx2sx3Qx4lx5";
+
+
+FTP host: dag.hostzi.com
+FTP user: a5004318
+FTP pass: dx1Ax2gx3
+
+GitHub
+
+login: dagdev
+senha: dx1Ax2gx3
+
+https://github.com/dagdev/Dag.git
+
+
+-- Login Page
+http://www.joshmorony.com/creating-an-attractive-login-screen-in-ionic-with-flexbox/
+-- Map google
+http://www.joshmorony.com/integrating-google-maps-with-an-ionic-application/
+-- Map markes
+http://www.joshmorony.com/part-1-using-the-http-service-in-ionic-to-dynamically-load-google-map-markers/
+-- Map Online/Offiline
+http://www.joshmorony.com/part-3-advanced-google-maps-integration-with-ionic-and-remote-data/
+-- Agrupar Markers
+http://www.princiweb.com.br/blog/programacao/google-apis/google-maps-api-v3-criando-um-mapa-personalizado.html
+
+-- Documentação Ionic 
+http://ionicframework.com/docs/ 
+
+-- AngularJs Chat
+http://cdn.misakai.com/www-spike/files/MyAngularChat.zip
+
+Tabelas :
+
+Bolhas 
+	-id
+-nome
+	-latitude
+	-longitude
+	-id_tipo (FK tab tipos)
+	-dt_hora_criacao
+	-id_usuario_criacao (FK usuarios)
+	-restrita (True or false)
+
+bolhas_historico 
+	-id
+	-latitude
+	-longitude
+	-id_tipo (FK tab tipos)
+	-dt_hora_criacao
+	-dt_hora_exclusao
+	-id_usuario_criacao (FK usuarios)
+	-qtd_max
+	-restrita (True or false)
+
+
+
+Usuarios
+
+
+Usuario_bolhas
+	-id_usuario
+	-id_bolha
+	-ativo
+
+Tipos (Tabela de domínio, que irá conter tipos como baladas, igrejas, clubs, esportes)
+-id	
+-nome
+-descricao
+
+
+
+
+
+# Pessoa saindo da bolha
+Front :
+Geolocation - Checar o local, para verificar se a pessoa está dentro do range da bolha.
+Quando a pessoa sair do range da bolha : 
+Dispara evento PHP dizendo que a pessoa saiu da bolha
+
+PHP - Ir até a tabela usuario_bolha e setar usuario como false, e relizar count da quantidade de usuarios ativos.
+     -Se a qtd de usuarios ativos for maior que zero:
+Retorna qtd de usuarios
+     - Se a qtd de usuarios ativos for igual a zero:
+     -	Dispara eventos de exclusão da bolha.
