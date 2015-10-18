@@ -14,7 +14,6 @@ CREATE TABLE dag_usuario (
   nome VARCHAR(20) NOT NULL,
   sobrenome VARCHAR(45) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  login VARCHAR(100) NOT NULL,
   senha VARCHAR(20) NULL,
   PRIMARY KEY(id_usuario)
 );
@@ -28,6 +27,7 @@ CREATE TABLE dag_bolha (
   id_usuario INTEGER UNSIGNED NOT NULL,
   id_tipo INTEGER UNSIGNED NOT NULL,
   nome VARCHAR(20) NOT NULL,
+  descricao VARCHAR(50),
   dt_hora_criacao DATETIME NOT NULL,
   latitude DOUBLE PRECISION NOT NULL,
   longitude DOUBLE PRECISION NOT NULL,
@@ -50,6 +50,7 @@ CREATE TABLE dag_bolha_historico (
   id_usuario INTEGER UNSIGNED NOT NULL,
   id_tipo INTEGER UNSIGNED NOT NULL,
   nome VARCHAR(20) NOT NULL,
+  descricao VARCHAR(50),
   dt_hora_criacao DATETIME NOT NULL,
   latitude DOUBLE PRECISION NOT NULL,
   longitude DOUBLE PRECISION NOT NULL,
