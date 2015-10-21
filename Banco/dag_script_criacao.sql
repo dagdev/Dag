@@ -14,7 +14,7 @@ CREATE TABLE dag_usuario (
   nome VARCHAR(20) NOT NULL,
   sobrenome VARCHAR(45) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  senha VARCHAR(20) NULL,
+  senha VARCHAR(32) NULL,
   PRIMARY KEY(id_usuario)
 );
 
