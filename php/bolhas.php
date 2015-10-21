@@ -10,7 +10,7 @@
   //The default result to be output to the browser
   $result = "{'success':false}";
  
-  $query = "SELECT id_bolha, nome, descricao, latitude, longitude FROM dag_bolha";
+  $query = "SELECT bl.id_bolha, bl.nome, bl.descricao, bl.latitude, bl.longitude, tp.nome tipo FROM dag_bolha bl, dag_tipo tp where tp.id_tipo = bl.id_tipo";
 
   //Run the query
   $dbresult = $mysqli->query($query);
@@ -25,13 +25,14 @@
       'nome'      => $row['nome'],
       'descricao' => $row['descricao'],
       'latitude'  => $row['latitude'],
-      'longitude' => $row['longitude']
+      'longitude' => $row['longitude'],
+      'tipo'      => $row['tipo']
     );
   }
  
   //If the query was executed successfully, create a JSON string containing the marker information
   if($dbresult){
-    $result = "{'success':true, 'markers':" . json_encode($markers) . "}";        
+    $result = json_encode($markers);        
   }
   else
   {
