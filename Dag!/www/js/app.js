@@ -90,9 +90,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
       google.maps.event.addListenerOnce(map, 'idle', function(){
  
         //Load the markers
-        console.log("Chamou loadMarkers()")
-        loadMarkers();
-        
+        var markers = loadMarkers();
+
       });
  
     }, function(error){
@@ -106,17 +105,20 @@ angular.module('starter', ['ionic', 'ngCordova'])
  
   function loadMarkers(){
       //Get all of the markers from our Markers factory
-      Markers.getMarkers().then(function(markers){
+      Markers.getMarkers().then(function(response){
 
+        var markers  = [];
         var iconBase = 'img/';
 
         var  icons = {
-          Esporte:{ icon: iconBase + 'Esporte.png'},
-          Noite:  { icon: iconBase + 'Noite.png'},
-          Estudo: { icon: iconBase + 'Estudo.png'}
+          Esporte:  { icon: iconBase + 'Esporte.png'},
+          Noite:    { icon: iconBase + 'Noite.png'},
+          Estudo:   { icon: iconBase + 'Estudo.png'},
+          Jogo:     { icon: iconBase + 'Jogo.png'},
+          Trabalho: { icon: iconBase + 'Trabalho.png'}
         };
 
-        var records  = markers.data;
+        var records  = response.data;
 
         for (var i = 0; i < records.length; i++) {
  
@@ -136,11 +138,10 @@ angular.module('starter', ['ionic', 'ngCordova'])
           var infoWindowContent = "<h4>" + record.nome + "</h4> <BR/> <h5>"+ record.descricao +"</h5>" ;          
  
           addInfoWindow(marker, infoWindowContent, record);
- 
+          markers.push(marker);
         }
- 
+        var markerCluster = new MarkerClusterer(map, markers); 
       }); 
- 
   }
  
   function addInfoWindow(marker, message, record) {
