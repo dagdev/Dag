@@ -162,12 +162,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
       google.maps.event.addListener(marker, 'click', function () {
 
           var zoom = Math.max(zoomMinimo, map.getZoom());
-          
-          console.log("zoomMinimo : " + zoomMinimo);
-          console.log("map.getZoom() : " + map.getZoom());
 
           map.setZoom(zoom);
-          map.setCenter(marker.getPosition());
           infoWindow.open(map, marker);
 
       });
