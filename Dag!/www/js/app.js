@@ -66,9 +66,10 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 .factory('GoogleMaps', function($cordovaGeolocation, Markers){
  
-  var apiKey = false;
-  var map = null;
- 
+  var apiKey     = false;
+  var map        = null;
+  var zoomMinimo = 15;
+
   function initMap(){
     console.log("[IN] initMap()")
     var options = {timeout: 10000, enableHighAccuracy: true};
@@ -79,7 +80,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
  
       var mapOptions = {
         center: latLng,
-        zoom: 15,
+        zoom: zoomMinimo,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
       };
@@ -159,11 +160,16 @@ angular.module('starter', ['ionic', 'ngCordova'])
       });
  
       google.maps.event.addListener(marker, 'click', function () {
+
+          var zoom = Math.max(zoomMinimo, map.getZoom());
           
-          map.setZoom(16);
+          console.log("zoomMinimo : " + zoomMinimo);
+          console.log("map.getZoom() : " + map.getZoom());
+
+          map.setZoom(zoom);
           map.setCenter(marker.getPosition());
           infoWindow.open(map, marker);
-          
+
       });
  
   } 
