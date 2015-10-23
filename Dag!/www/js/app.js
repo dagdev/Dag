@@ -83,17 +83,17 @@ angular.module('starter', ['ionic', 'ngCordova'])
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
       };
-      console.log("Chegou aqui 1")
+      
       map = new google.maps.Map(document.getElementById("map"), mapOptions);
      
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(map, 'idle', function(){
  
         //Load the markers
-        var markers = loadMarkers();
+        loadMarkers();
 
       });
- 
+
     }, function(error){
       console.log("Could not get location");
  
@@ -126,10 +126,9 @@ angular.module('starter', ['ionic', 'ngCordova'])
         for (var i = 0; i < records.length; i++) {
  
           var record = records[i];   
-          console.log(record.latitude);
-          console.log(record.longitude);
+
           var markerPos = new google.maps.LatLng(record.latitude, record.longitude);
-          console.log(record.tp);
+
           // Add the markerto the map
           var marker = new google.maps.Marker({
               map: map,
@@ -137,7 +136,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
               position: markerPos,
               icon: icons[record.tipo].icon
           });   
-          console.log(marker);
+          
           var infoWindowContent = "<h4>" + record.nome + "</h4> <BR/> <h5>"+ record.descricao +"</h5>" ;          
  
           addInfoWindow(marker, infoWindowContent, record);
@@ -160,11 +159,16 @@ angular.module('starter', ['ionic', 'ngCordova'])
       });
  
       google.maps.event.addListener(marker, 'click', function () {
+          
+          map.setZoom(16);
+          map.setCenter(marker.getPosition());
           infoWindow.open(map, marker);
+          
       });
  
-  }
- 
+  } 
+
+
   return {
     init: function(){
       console.log("Chamou initMap");
