@@ -107,15 +107,18 @@ angular.module('starter', ['ionic', 'ngCordova'])
       //Get all of the markers from our Markers factory
       Markers.getMarkers().then(function(response){
 
-        var markers  = [];
-        var iconBase = 'img/';
+        var markers      = [];
+        var latlngbounds = new google.maps.LatLngBounds();
+        var mkOptions    = {gridSize: 50, maxZoom: 16};
+        var iconBase     = 'img/';
 
         var  icons = {
           Esporte:  { icon: iconBase + 'Esporte.png'},
           Noite:    { icon: iconBase + 'Noite.png'},
           Estudo:   { icon: iconBase + 'Estudo.png'},
           Jogo:     { icon: iconBase + 'Jogo.png'},
-          Trabalho: { icon: iconBase + 'Trabalho.png'}
+          Trabalho: { icon: iconBase + 'Trabalho.png'},
+          Relax:    { icon: iconBase + 'Relax.png'}
         };
 
         var records  = response.data;
@@ -138,9 +141,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
           var infoWindowContent = "<h4>" + record.nome + "</h4> <BR/> <h5>"+ record.descricao +"</h5>" ;          
  
           addInfoWindow(marker, infoWindowContent, record);
+
           markers.push(marker);
+
+          latlngbounds.extend(marker.position);
         }
-        var markerCluster = new MarkerClusterer(map, markers); 
+
+        var markerCluster = new MarkerClusterer(map, markers, mkOptions); 
+        //Zoom automatico para colcoar todos os markers na tela.
+        map.fitBounds(latlngbounds);
       }); 
   }
  
