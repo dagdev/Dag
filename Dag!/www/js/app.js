@@ -74,7 +74,12 @@ angular.module('starter', ['ionic', 'ngCordova'])
                     Estudo:   { icon: iconBase + 'Estudo.png'},
                     Jogo:     { icon: iconBase + 'Jogo.png'},
                     Trabalho: { icon: iconBase + 'Trabalho.png'},
-                    Relax:    { icon: iconBase + 'Relax.png'}
+                    Relax:    { icon: iconBase + 'Relax.png'},
+                    Viagem:   { icon: iconBase + 'Viagem.png'},
+                    Teatro:   { icon: iconBase + 'Teatro.png'},
+                    Compra:   { icon: iconBase + 'Compra.png'},
+                    Corrida:  { icon: iconBase + 'Corrida.png'},
+                    Balada:   { icon: iconBase + 'Balada.png'}
                   };
   var map        = null;
   var posReal    = new google.maps.Marker();
