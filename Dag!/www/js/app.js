@@ -65,10 +65,21 @@ angular.module('starter', ['ionic', 'ngCordova'])
 })
 
 .factory('GoogleMaps', function($cordovaGeolocation, Markers){
- 
-  var apiKey     = false;
+  
+  var iconBase  = 'img/';
+  var icons     = {
+                    Posicao:  { icon: iconBase + 'Posicao.png'},
+                    Esporte:  { icon: iconBase + 'Esporte.png'},
+                    Noite:    { icon: iconBase + 'Noite.png'},
+                    Estudo:   { icon: iconBase + 'Estudo.png'},
+                    Jogo:     { icon: iconBase + 'Jogo.png'},
+                    Trabalho: { icon: iconBase + 'Trabalho.png'},
+                    Relax:    { icon: iconBase + 'Relax.png'}
+                  };
   var map        = null;
-  var zoomMinimo = 15;
+  var posReal    = new google.maps.Marker();
+  var apiKey     = false;
+  var zoomMinimo = 16;
 
   function initMap(){
     console.log("[IN] initMap()")
@@ -89,7 +100,9 @@ angular.module('starter', ['ionic', 'ngCordova'])
      
       //Wait until the map is loaded
       google.maps.event.addListenerOnce(map, 'idle', function(){
- 
+        posReal.setMap(map);
+        posReal.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+        posReal.setIcon(icons['Posicao'].icon);
         //Load the markers
         loadMarkers();
 
@@ -97,9 +110,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     }, function(error){
       console.log("Could not get location");
- 
-        //Load the markers
-        loadMarkers();
     });
  
   }
@@ -108,19 +118,9 @@ angular.module('starter', ['ionic', 'ngCordova'])
       //Get all of the markers from our Markers factory
       Markers.getMarkers().then(function(response){
 
-        var markers      = [];
+        var bolhas      = [];
         var latlngbounds = new google.maps.LatLngBounds();
-        var mkOptions    = {gridSize: 50, maxZoom: 16};
-        var iconBase     = 'img/';
-
-        var  icons = {
-          Esporte:  { icon: iconBase + 'Esporte.png'},
-          Noite:    { icon: iconBase + 'Noite.png'},
-          Estudo:   { icon: iconBase + 'Estudo.png'},
-          Jogo:     { icon: iconBase + 'Jogo.png'},
-          Trabalho: { icon: iconBase + 'Trabalho.png'},
-          Relax:    { icon: iconBase + 'Relax.png'}
-        };
+        var mkOptions    = {gridSize: 50, maxZoom: zoomMinimo};
 
         var records  = response.data;
 
@@ -128,48 +128,59 @@ angular.module('starter', ['ionic', 'ngCordova'])
  
           var record = records[i];   
 
-          var markerPos = new google.maps.LatLng(record.latitude, record.longitude);
+          var bolhaPos = new google.maps.LatLng(record.latitude, record.longitude);
 
           // Add the markerto the map
-          var marker = new google.maps.Marker({
-              map: map,
-              animation: google.maps.Animation.DROP,
-              position: markerPos,
-              icon: icons[record.tipo].icon
-          });   
+          var bolha = addBolha(bolhaPos, icons[record.tipo].icon);   
           
           var infoWindowContent = "<h4>" + record.nome + "</h4> <BR/> <h5>"+ record.descricao +"</h5>" ;          
  
-          addInfoWindow(marker, infoWindowContent, record);
+          addInfoWindow(bolha, infoWindowContent, record);
 
-          markers.push(marker);
+          bolhas.push(bolha);
 
-          latlngbounds.extend(marker.position);
+          latlngbounds.extend(bolha.position);
         }
 
-        var markerCluster = new MarkerClusterer(map, markers, mkOptions); 
+        var markerCluster = new MarkerClusterer(map, bolhas, mkOptions); 
         //Zoom automatico para colcoar todos os markers na tela.
         map.fitBounds(latlngbounds);
+        
       }); 
   }
- 
+  
+  function addBolha(position, icon){
+    var bolha = new google.maps.Marker({
+                                          map: map,
+                                          animation: google.maps.Animation.DROP,
+                                          position: position,
+                                          icon: icon
+                                        });
+    google.maps.event.addListener(map, 'click', function(){ console.log('Click'); })
+    return bolha;
+  }
+
   function addInfoWindow(marker, message, record) {
  
-      var infoWindow = new google.maps.InfoWindow({
-          content: message
-      });
- 
-      google.maps.event.addListener(marker, 'click', function () {
+    var infoWindow = new google.maps.InfoWindow({
+        content: message
+    });
 
-          var zoom = Math.max(zoomMinimo, map.getZoom());
+    google.maps.event.addListener(marker, 'click', function () {
 
-          map.setZoom(zoom);
-          infoWindow.open(map, marker);
+      var zoom = Math.max(zoomMinimo, map.getZoom());
 
-      });
- 
+      map.setZoom(zoom);
+      infoWindow.open(map, marker);
+
+    });
   } 
-
+ 
+  function atualzaPosicaoReal(){
+    
+    posReal.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+    
+  }
 
   return {
     init: function(){
